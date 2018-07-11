@@ -1,18 +1,33 @@
-import Model from './models/model';
-import View from './views/view';
-import Controller from './controller/controller';
+import List from './List';
+import * as listView from './listView';
 
-export default class App {
-  constructor() {
-    const model = new Model();
-    const view = new View();
-    this.controller = new Controller(model, view);
+import { selectors } from './service';
+
+/** Global state of the app
+ * - List object
+ */
+const state = {};
+
+/**
+ * LIST CONTROLLER
+ */
+const listCtrl = () => {
+  // Create new list if there in none yet
+  if (!state.list) {
+    state.list = new List();
   }
-  init() {
-    console.log('App started...');
-  }
-}
+  // Get item input from view
+  const item = listView.getItemInput();
+  // Add item to the state
+  state.list.addItem(item.title, item.priority);
+  // Add items to UI
+  state.list.items.forEach(item => {
+    listView.renderItem(item);
+  });
+};
 
-const app = new App();
-
-window.addEventListener('load', () => app.init());
+// Handle Event Listeners for add button
+selectors.addBtn.addEventListener('click', e => {
+  listCtrl();
+  e.preventDefault();
+});

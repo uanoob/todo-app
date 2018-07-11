@@ -17,22 +17,37 @@
     <a class="navbar-brand" href="#">ToDo List</a>
   </nav>
 
-  <div class="container mt-3">
+  <form class="container mt-3 form__group">
     <div class="form-group">
-      <input type="text" class="form-control add__field" placeholder="Enter task">
+      <input type="text" class="form-control task__field" placeholder="Enter task">
     </div>
 
     <fieldset>
       <p>Choose Priority:</p>
-      <button type="button" class="btn btn-outline-danger priority__btn-high">High</button>
-      <button type="button" class="btn btn-outline-warning priority__btn-middle">Middle</button>
-      <button type="button" class="btn btn-outline-success priority__btn-low">Low</button>
-      <button type="button" class="btn btn-outline-secondary priority__btn-none">None</button>
+      <div class="form-group priority__group">
+        <div class="custom-control custom-radio">
+          <input type="radio" id="priority__none" name="customRadio" class="custom-control-input" value="none" checked="">
+          <label class="custom-control-label" for="priority__none">None</label>
+        </div>
+        <div class="custom-control custom-radio">
+          <input type="radio" id="priority__low" name="customRadio" class="custom-control-input" value="low">
+          <label class="custom-control-label" for="priority__low">Low</label>
+        </div>
+        <div class="custom-control custom-radio">
+          <input type="radio" id="priority__middle" name="customRadio" class="custom-control-input" value="middle">
+          <label class="custom-control-label" for="priority__middle">Middle</label>
+        </div>
+        <div class="custom-control custom-radio">
+          <input type="radio" id="priority__high" name="customRadio" class="custom-control-input" value="high">
+          <label class="custom-control-label" for="priority__high">High</label>
+        </div>
+      </div>
     </fieldset>
+
     <div class="d-flex flex-row-reverse">
       <button class="btn btn-primary my-2 my-sm-0 add__btn" type="submit">Add task</button>
     </div>
-  </div>
+  </form>
 
   <div class="container task__list">
     <label class="control-label">Task List:</label>
