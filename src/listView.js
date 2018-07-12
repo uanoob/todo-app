@@ -22,17 +22,17 @@ export const deleteItem = id => {
   }
 };
 
+export const showError = () => {
+  elements.taskInput.classList.add('is-invalid');
+  setTimeout(() => {
+    elements.taskInput.classList.remove('is-invalid');
+  }, 2000);
+};
+
 export const renderItem = item => {
   const markup = `
       <div class="form-group task__item" data-itemid=${item.id}>
         <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <span class="input-group-text task__item-edit">
-              <a href="#">
-                <i class="far fa-edit"></i>
-              </a>
-            </span>
-          </div>
           <input type="text" class="form-control border-${item.priority}" value="${item.title}" disabled>
           <div class="input-group-append">
             <span class="input-group-text">

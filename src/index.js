@@ -18,24 +18,30 @@ const listCtrl = () => {
   }
   // Get item input from view
   const item = listView.getItemInput();
-  // Add item to the state
-  state.list.addItem(item.title, item.priority);
-  // Prepare UI for changes
-  listView.clearInput();
-  listView.clearList();
-  // Add items to UI
-  state.list.items.forEach(item => {
-    listView.renderItem(item);
-  });
+  // Validate
+  if (item.title === '') {
+    // Show error
+    listView.showError();
+  } else {
+    // Add item to the state
+    state.list.addItem(item.title, item.priority);
+    // Prepare UI for changes
+    listView.clearInput();
+    listView.clearList();
+    // Add items to UI
+    state.list.items.forEach(item => {
+      listView.renderItem(item);
+    });
+  }
 };
 
-// Handle Event Listeners for add item
+// Handle Event Listeners for ADD item
 elements.addBtn.addEventListener('click', e => {
   listCtrl();
   e.preventDefault();
 });
 
-// Handle Event Listeners for delete item
+// Handle Event Listeners for DELETE item
 elements.taskList.addEventListener('click', e => {
   // Get item id from data-itemid
   const id = e.target.closest('.task__item').dataset.itemid;
@@ -46,7 +52,6 @@ elements.taskList.addEventListener('click', e => {
     // Delete item from UI
     listView.deleteItem(id);
   }
-
   e.preventDefault();
 });
 
