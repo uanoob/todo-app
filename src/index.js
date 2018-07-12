@@ -1,7 +1,7 @@
 import List from './List';
 import * as listView from './listView';
 
-import { elements, selectors } from './service';
+import { elements, selectors, persistData, readStorage } from './service';
 
 /** Global state of the app
  * - List object
@@ -12,10 +12,6 @@ const state = {};
  * LIST CONTROLLER
  */
 const listCtrl = () => {
-  // Create new list if there in none yet
-  if (!state.list) {
-    state.list = new List();
-  }
   // Get item input from view
   const item = listView.getItemInput();
   // Validate
@@ -25,6 +21,8 @@ const listCtrl = () => {
   } else {
     // Add item to the state
     state.list.addItem(item.title, item.priority);
+    // Set data to Local Storage
+    persistData(state.list.items);
     // Prepare UI for changes
     listView.clearInput();
     listView.clearList();
@@ -49,13 +47,27 @@ elements.taskList.addEventListener('click', e => {
   if (e.target.classList.contains(selectors.deleteBtn)) {
     // Delete item from state
     state.list.deleteItem(id);
+    // Set data to Local Storage
+    persistData(state.list.items);
     // Delete item from UI
     listView.deleteItem(id);
   }
   e.preventDefault();
 });
 
-const init = () => {};
+const init = () => {
+  // Create new list
+  state.list = new List();
+  // Restore data from Local Storage
+  const data = readStorage();
+  if (data) {
+    state.list.items = data;
+    // Add items to UI
+    state.list.items.forEach(item => {
+      listView.renderItem(item);
+    });
+  }
+};
 
 // Initial HTML document has been completely loaded and parsed
 window.addEventListener('DOMContentLoaded', init());

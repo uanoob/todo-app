@@ -8,3 +8,15 @@ export const elements = {
 export const selectors = {
   deleteBtn: 'task__item-delete',
 };
+
+export const persistData = data => {
+  localStorage.setItem('tasks', JSON.stringify(data));
+};
+
+export const readStorage = () => {
+  const storage = JSON.parse(localStorage.getItem('tasks'));
+  // Restoring tasks from Local Storage
+  if (storage) {
+    return storage;
+  }
+};
